@@ -42,13 +42,20 @@ export class HomeComponent {
   }
 
   statusTask(index: number) {
-    // Obtener el array actual de tasks
-    const currentTasks = this.tasks();
-
-    // Verificar si el índice está dentro de los límites del array
-    if (index >= 0 && index < currentTasks.length) {
-      // Actualizar el estado completed del elemento en la posición index
-      currentTasks[index].completed = !currentTasks[index].completed;
-    }
+    this.tasks.update((currentTasks) => {
+      // Verifica si el índice está dentro de los límites del array
+      if (index >= 0 && index < currentTasks.length) {
+        // Cambia el estado 'completed' del elemento en la posición index
+        const updatedTasks = currentTasks.map((task, i) =>
+          i === index ? { ...task, completed: !task.completed } : task
+        );
+        
+        // Devuelve el nuevo estado de las tareas
+        return updatedTasks;
+      }
+  
+      // Devuelve el estado actual si el índice está fuera de los límites
+      return currentTasks;
+    });
   }
 }
