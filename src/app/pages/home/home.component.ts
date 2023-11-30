@@ -18,7 +18,7 @@ export class HomeComponent {
     {
       id: Date.now(),
       title: 'Crear components',
-      completed: false
+      completed: true
     },
   ]);
 
@@ -39,5 +39,16 @@ export class HomeComponent {
 
   deleteTask(index: number) {
     this.tasks.update((tasks) => tasks.filter((task, position) => position !== index));
+  }
+
+  statusTask(index: number) {
+    // Obtener el array actual de tasks
+    const currentTasks = this.tasks();
+
+    // Verificar si el índice está dentro de los límites del array
+    if (index >= 0 && index < currentTasks.length) {
+      // Actualizar el estado completed del elemento en la posición index
+      currentTasks[index].completed = !currentTasks[index].completed;
+    }
   }
 }
